@@ -9,7 +9,7 @@ import React, {ChangeEvent, useCallback, useEffect, useRef, useState} from 'reac
 import { addDate, addHours, subtractDate } from './utils';
 import { theme } from './theme';
 
-type ViewType = 'month' | 'week' | 'day';
+type ViewType = 'month' | 'week' | 'day'; // default type : week
 
 const today = new TZDate();
 const viewModeOptions = [
@@ -28,9 +28,14 @@ const viewModeOptions = [
 ];
 
 export function App({ view }: { view: ViewType }) {
+    // useRef 로 특정 DOM(calendar) 선택하기
     const calendarRef = useRef<typeof Calendar>(null);
+    // useState 를 통해 컴포넌트에서 바뀌는 값(현재 선택된 날짜) 관리하기
     const [selectedDateRangeText, setSelectedDateRangeText] = useState('');
+    // useState 를 통해 컴포넌트에서 바뀌는 값(캘린터 타입(monthly, weekly, daily) 관리하기
     const [selectedView, setSelectedView] = useState(view);
+
+    // 공개/비공개 타입 선택
     const initialCalendars: Options['calendars'] = [
         {
             id: '0',
@@ -41,33 +46,39 @@ export function App({ view }: { view: ViewType }) {
         },
         {
             id: '1',
-            name: 'Company',
+            name: 'Public',
             backgroundColor: '#00a9ff',
             borderColor: '#00a9ff',
             dragBackgroundColor: '#00a9ff',
         },
     ];
+
+    // 일정 초기화
     const initialEvents: Partial<EventObject>[] = [
         {
-            id: '1',
-            calendarId: '0',
-            title: 'TOAST UI Calendar Study',
-            category: 'time',
-            start: today,
-            end: addHours(today, 3),
+            id: '1', // 일정 ID
+            calendarId: '0', // 캘린더 ID
+            title: 'TOAST UI Calendar Study', // 일정 제목
+            body : '일정내용으 이겁니다~!1', // 일정 내용
+            category: 'time', // 일정 카테고리(milestone, task, allday, time 중 하나)
+            start: today, // 일정이 시작하는 일시
+            end: addHours(today, 3), // 일정이 끝나는 일시
+            location: '', // 일정 장소
+            state : 'running', // state : todo, in progress, done type 정의 필요
         },
         {
             id: '2',
             calendarId: '0',
             title: 'Practice',
+            body : '일정내용은 이겁니다~!2', // 일정 내용
             category: 'milestone',
-            start: addDate(today, 1),
-            end: addDate(today, 1),
+            start: addDate(today, 1), // 일정이 시작하는 일시
+            end: addDate(today, 1), // 일정이 끝나는 일시
             isReadOnly: true,
         },
         {
             id: '3',
-            calendarId: '0',
+            calendarId: '1',
             title: 'FE Workshop',
             category: 'allday',
             start: subtractDate(today, 2),
@@ -86,8 +97,10 @@ export function App({ view }: { view: ViewType }) {
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
+    // useCallback 을 사용하여 함수(calender의 DOM) 재사용하기
     const getCalInstance = useCallback(() => calendarRef.current?.getInstance?.(), []);
 
+    // rendering 될 때마다 캘린더 표시 날짜 바꿔주기
     const updateRenderRangeText = useCallback(() => {
         const calInstance = getCalInstance();
         if (!calInstance) {
@@ -130,6 +143,7 @@ export function App({ view }: { view: ViewType }) {
         setSelectedDateRangeText(dateRangeText);
     }, [getCalInstance]);
 
+    // 캘린터 타입(month/week/day) 변경될 때마다
     useEffect(() => {
         setSelectedView(view);
     }, [view]);
@@ -154,10 +168,12 @@ export function App({ view }: { view: ViewType }) {
         getCalInstance().deleteEvent(id, calendarId);
     };
 
+    // 캘런더 타입 바꿀 때 실행되는 이벤트
     const onChangeSelect = (ev: ChangeEvent<HTMLSelectElement>) => {
         setSelectedView(ev.target.value as ViewType);
     };
 
+    //
     const onClickDayName: ExternalEventTypes['clickDayName'] = (res) => {
         console.group('onClickDayName');
         console.log('Date : ', res.date);
@@ -236,36 +252,36 @@ export function App({ view }: { view: ViewType }) {
                     ))}
                 </select>
                 <span>
-          <button
-              type="button"
-              className="btn btn-default btn-sm move-today"
-              data-action="move-today"
-              onClick={onClickNavi}
-          >
-            Today
-          </button>
-          <button
-              type="button"
-              className="btn btn-default btn-sm move-day"
-              data-action="move-prev"
-              onClick={onClickNavi}
-          >
-            Prev
-          </button>
-          <button
-              type="button"
-              className="btn btn-default btn-sm move-day"
-              data-action="move-next"
-              onClick={onClickNavi}
-          >
-            Next
-          </button>
-        </span>
+                  <button
+                      type="button"
+                      className="btn btn-default btn-sm move-today"
+                      data-action="move-today"
+                      onClick={onClickNavi}
+                  >
+                    Today
+                  </button>
+                  <button
+                      type="button"
+                      className="btn btn-default btn-sm move-day"
+                      data-action="move-prev"
+                      onClick={onClickNavi}
+                  >
+                    Prev
+                  </button>
+                  <button
+                      type="button"
+                      className="btn btn-default btn-sm move-day"
+                      data-action="move-next"
+                      onClick={onClickNavi}
+                  >
+                    Next
+                  </button>
+                 </span>
                 <span className="render-range">{selectedDateRangeText}</span>
             </div>
             <Calendar
                 height="900px"
-                calendars={initialCalendars}
+                calendars={initialCalendars} // 캘린더에서 사용하는 캘린더 목록
                 month={{ startDayOfWeek: 1 }}
                 events={initialEvents}
                 template={{
@@ -276,8 +292,8 @@ export function App({ view }: { view: ViewType }) {
                         return `[All day] ${event.title}`;
                     },
                 }}
-                theme={theme}
-                timezone={{
+                theme={theme} // 적용할 테마
+                timezone={{ // 타임존 셋팅
                     zones: [
                         {
                             timezoneName: 'Asia/Seoul',
@@ -291,9 +307,9 @@ export function App({ view }: { view: ViewType }) {
                         },
                     ],
                 }}
-                useDetailPopup={true}
-                useFormPopup={true}
-                view={selectedView}
+                useDetailPopup={true} // 기본으로 제공하는 일정 생성 팝업 사용 여부
+                useFormPopup={true} // 기본으로 제공하는 일정 상세 팝업 사용 여부
+                view={selectedView} // 캘린터 타입
                 week={{
                     showTimezoneCollapseButton: true,
                     timezonesCollapsed: false,
