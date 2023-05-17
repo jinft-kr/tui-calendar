@@ -191,6 +191,14 @@ const Calender = ({ view }: { view: ViewType }) => {
             updateRenderRangeText();
         }
     };
+    const onClickSetDate = (ev: any) => {
+        if ((ev.target as HTMLButtonElement).tagName === 'BUTTON') {
+            const button = ev.target as HTMLButtonElement;
+            const actionName = (button.getAttribute('data-action') ?? 'month');
+            getCalInstance()?.setDate(actionName);
+            updateRenderRangeText();
+        }
+    };
 
     const onClickEvent: ExternalEventTypes['clickEvent'] = (res) => {
         console.group('onClickEvent');
@@ -280,6 +288,15 @@ const Calender = ({ view }: { view: ViewType }) => {
                           style={{border: '1px solid gray', borderRadius: '5px', marginRight : '10px', padding:'10px'}}
                       >
                         Next
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-default btn-sm move-day"
+                        data-action="2022-01-01"
+                        onClick={onClickSetDate}
+                        style={{border: '1px solid gray', borderRadius: '5px', marginRight : '10px', padding:'10px'}}
+                       >
+                        2022-01-01
                       </button>
                  </span>
             </div>
