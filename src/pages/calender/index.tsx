@@ -243,111 +243,117 @@ const Calender = ({ view }: { view: ViewType }) => {
         getCalInstance().createEvents([event]);
     };
     return (
-        <>
-            <div>
-                <h1>카테고리</h1>
-                {
-                    category.map(category => (
-                        <h3>{category}</h3>
-                    ))
-                }
+        <main style={{margin : '10px'}}>
+            <div className={"div1"} style={{ textAlign: 'right', paddingRight : '10px'}}>
+                <select style={{ border: '1px solid gray', borderRadius: '5px', marginLeft: '20px', padding: '10px', float: 'left' }} onChange={onChangeSelect} value={selectedView}>
+                    {viewModeOptions.map((option, index) => (
+                        <option value={option.value} key={index}>
+                            {option.title}
+                        </option>
+                    ))}
+                </select>
+                <span className="render-range" style={{border: '1px solid gray', borderRadius: '5px', marginRight : '10px', padding:'10px'}}>{selectedDateRangeText}</span>
+                <span>
+                      <button
+                          type="button"
+                          className="btn btn-default btn-sm move-today"
+                          data-action="move-today"
+                          onClick={onClickNavi}
+                          style={{border: '1px solid gray', borderRadius: '5px', marginRight : '10px', padding:'10px'}}
+                      >
+                        Today
+                      </button>
+                      <button
+                          type="button"
+                          className="btn btn-default btn-sm move-day"
+                          data-action="move-prev"
+                          onClick={onClickNavi}
+                          style={{border: '1px solid gray', borderRadius: '5px', marginRight : '10px', padding:'10px'}}
+                      >
+                        Prev
+                      </button>
+                      <button
+                          type="button"
+                          className="btn btn-default btn-sm move-day"
+                          data-action="move-next"
+                          onClick={onClickNavi}
+                          style={{border: '1px solid gray', borderRadius: '5px', marginRight : '10px', padding:'10px'}}
+                      >
+                        Next
+                      </button>
+                 </span>
             </div>
-            <div>
-                <h1>팔로워</h1>
-                {
-                    follower.map(follower => (
-                        <h3>{follower}</h3>
-                    ))
-                }
-            </div>
-            <div>
-                <h1>🍞📅 TOAST UI Calendar + React.js</h1>
-                <div>
-                    <select onChange={onChangeSelect} value={selectedView}>
-                        {viewModeOptions.map((option, index) => (
-                            <option value={option.value} key={index}>
-                                {option.title}
-                            </option>
-                        ))}
-                    </select>
-                    <span>
-                          <button
-                              type="button"
-                              className="btn btn-default btn-sm move-today"
-                              data-action="move-today"
-                              onClick={onClickNavi}
-                          >
-                            Today
-                          </button>
-                          <button
-                              type="button"
-                              className="btn btn-default btn-sm move-day"
-                              data-action="move-prev"
-                              onClick={onClickNavi}
-                          >
-                            Prev
-                          </button>
-                          <button
-                              type="button"
-                              className="btn btn-default btn-sm move-day"
-                              data-action="move-next"
-                              onClick={onClickNavi}
-                          >
-                            Next
-                          </button>
-                         </span>
-                    <span className="render-range">{selectedDateRangeText}</span>
+            <div style={{display: 'flex', margin : '10px'}}>
+                <div className={"div2"} style={{flex : 1}}>
+                    <div style={{border: '1px solid gray', borderRadius: '5px', margin: '10px', padding: '30px', marginBottom: '5px'}}>
+                        <h1 style={{fontWeight: 'bold', color: 'blue'}}>카테고리</h1>
+                        {
+                            category.map(category => (
+                                <h3>{category}</h3>
+                            ))
+                        }
+                    </div>
+                    <div style={{border: '1px solid gray', borderRadius: '5px', margin: '10px', padding: '30px'}}>
+                        <h1 style={{fontWeight: 'bold', color: 'blue'}}>팔로워</h1>
+                        {
+                            follower.map(follower => (
+                                <h3>{follower}</h3>
+                            ))
+                        }
+                    </div>
                 </div>
-                <Calendar
-                    height="900px"
-                    calendars={initialCalendars} // 캘린더에서 사용하는 캘린더 목록
-                    month={{ startDayOfWeek: 1 }}
-                    events={initialEvents}
-                    template={{
-                        milestone(event) {
-                            return `<span style="color: #fff; background-color: ${event.backgroundColor};">${event.title}</span>`;
-                        },
-                        allday(event) {
-                            return `[All day] ${event.title}`;
-                        },
-                    }}
-                    theme={theme} // 적용할 테마
-                    timezone={{ // 타임존 셋팅
-                        zones: [
-                            {
-                                timezoneName: 'Asia/Seoul',
-                                displayLabel: 'Seoul',
-                                tooltip: 'UTC+09:00',
+                <div className={"div3"} style={{flex: 9}}>
+                    <Calendar
+                        height="900px"
+                        calendars={initialCalendars} // 캘린더에서 사용하는 캘린더 목록
+                        month={{ startDayOfWeek: 1 }}
+                        events={initialEvents}
+                        template={{
+                            milestone(event) {
+                                return `<span style="color: #fff; background-color: ${event.backgroundColor};">${event.title}</span>`;
                             },
-                            {
-                                timezoneName: 'Pacific/Guam',
-                                displayLabel: 'Guam',
-                                tooltip: 'UTC+10:00',
+                            allday(event) {
+                                return `[All day] ${event.title}`;
                             },
-                        ],
-                    }}
-                    useDetailPopup={true} // 기본으로 제공하는 일정 생성 팝업 사용 여부
-                    useFormPopup={true} // 기본으로 제공하는 일정 상세 팝업 사용 여부
-                    view={selectedView} // 캘린터 타입
-                    week={{
-                        showTimezoneCollapseButton: true,
-                        timezonesCollapsed: false,
-                        eventView: true,
-                        taskView: true,
-                    }}
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    // @ts-ignore
-                    ref={calendarRef}
-                    onAfterRenderEvent={onAfterRenderEvent}
-                    onBeforeDeleteEvent={onBeforeDeleteEvent}
-                    onClickDayname={onClickDayName}
-                    onClickEvent={onClickEvent}
-                    onClickTimezonesCollapseBtn={onClickTimezonesCollapseBtn}
-                    onBeforeUpdateEvent={onBeforeUpdateEvent}
-                    onBeforeCreateEvent={onBeforeCreateEvent}
-                />
+                        }}
+                        theme={theme} // 적용할 테마
+                        timezone={{ // 타임존 셋팅
+                            zones: [
+                                {
+                                    timezoneName: 'Asia/Seoul',
+                                    displayLabel: 'Seoul',
+                                    tooltip: 'UTC+09:00',
+                                },
+                                {
+                                    timezoneName: 'Pacific/Guam',
+                                    displayLabel: 'Guam',
+                                    tooltip: 'UTC+10:00',
+                                },
+                            ],
+                        }}
+                        useDetailPopup={true} // 기본으로 제공하는 일정 생성 팝업 사용 여부
+                        useFormPopup={true} // 기본으로 제공하는 일정 상세 팝업 사용 여부
+                        view={selectedView} // 캘린터 타입
+                        week={{
+                            showTimezoneCollapseButton: true,
+                            timezonesCollapsed: false,
+                            eventView: true,
+                            taskView: true,
+                        }}
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        // @ts-ignore
+                        ref={calendarRef}
+                        onAfterRenderEvent={onAfterRenderEvent}
+                        onBeforeDeleteEvent={onBeforeDeleteEvent}
+                        onClickDayname={onClickDayName}
+                        onClickEvent={onClickEvent}
+                        onClickTimezonesCollapseBtn={onClickTimezonesCollapseBtn}
+                        onBeforeUpdateEvent={onBeforeUpdateEvent}
+                        onBeforeCreateEvent={onBeforeCreateEvent}
+                    />
+                </div>
             </div>
-        </>
+        </main>
     )
 }
 export default Calender
