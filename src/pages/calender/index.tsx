@@ -33,6 +33,10 @@ const Calender = ({ view }: { view: ViewType }) => {
     const [selectedDateRangeText, setSelectedDateRangeText] = useState('');
     // useState 를 통해 컴포넌트에서 바뀌는 값(캘린터 타입(monthly, weekly, daily) 관리하기
     const [selectedView, setSelectedView] = useState(view);
+    // 카테고리 state
+    const [category, setCategory] = useState([ "기본", "운동", "공부", "etc"]);
+    // 팔로워 state
+    const [ follower, setFollwer] = useState(['김민석', '노휘래', '최충실']);
 
     // 공개/비공개 타입 선택
     const initialCalendars: Options['calendars'] = [
@@ -239,93 +243,111 @@ const Calender = ({ view }: { view: ViewType }) => {
         getCalInstance().createEvents([event]);
     };
     return (
-        <div>
-            <h1>🍞📅 TOAST UI Calendar + React.js</h1>
+        <>
             <div>
-                <select onChange={onChangeSelect} value={selectedView}>
-                    {viewModeOptions.map((option, index) => (
-                        <option value={option.value} key={index}>
-                            {option.title}
-                        </option>
-                    ))}
-                </select>
-                <span>
-                      <button
-                          type="button"
-                          className="btn btn-default btn-sm move-today"
-                          data-action="move-today"
-                          onClick={onClickNavi}
-                      >
-                        Today
-                      </button>
-                      <button
-                          type="button"
-                          className="btn btn-default btn-sm move-day"
-                          data-action="move-prev"
-                          onClick={onClickNavi}
-                      >
-                        Prev
-                      </button>
-                      <button
-                          type="button"
-                          className="btn btn-default btn-sm move-day"
-                          data-action="move-next"
-                          onClick={onClickNavi}
-                      >
-                        Next
-                      </button>
-                     </span>
-                <span className="render-range">{selectedDateRangeText}</span>
+                <h1>카테고리</h1>
+                {
+                    category.map(category => (
+                        <h3>{category}</h3>
+                    ))
+                }
             </div>
-            <Calendar
-                height="900px"
-                calendars={initialCalendars} // 캘린더에서 사용하는 캘린더 목록
-                month={{ startDayOfWeek: 1 }}
-                events={initialEvents}
-                template={{
-                    milestone(event) {
-                        return `<span style="color: #fff; background-color: ${event.backgroundColor};">${event.title}</span>`;
-                    },
-                    allday(event) {
-                        return `[All day] ${event.title}`;
-                    },
-                }}
-                theme={theme} // 적용할 테마
-                timezone={{ // 타임존 셋팅
-                    zones: [
-                        {
-                            timezoneName: 'Asia/Seoul',
-                            displayLabel: 'Seoul',
-                            tooltip: 'UTC+09:00',
+            <div>
+                <h1>팔로워</h1>
+                {
+                    follower.map(follower => (
+                        <h3>{follower}</h3>
+                    ))
+                }
+            </div>
+            <div>
+                <h1>🍞📅 TOAST UI Calendar + React.js</h1>
+                <div>
+                    <select onChange={onChangeSelect} value={selectedView}>
+                        {viewModeOptions.map((option, index) => (
+                            <option value={option.value} key={index}>
+                                {option.title}
+                            </option>
+                        ))}
+                    </select>
+                    <span>
+                          <button
+                              type="button"
+                              className="btn btn-default btn-sm move-today"
+                              data-action="move-today"
+                              onClick={onClickNavi}
+                          >
+                            Today
+                          </button>
+                          <button
+                              type="button"
+                              className="btn btn-default btn-sm move-day"
+                              data-action="move-prev"
+                              onClick={onClickNavi}
+                          >
+                            Prev
+                          </button>
+                          <button
+                              type="button"
+                              className="btn btn-default btn-sm move-day"
+                              data-action="move-next"
+                              onClick={onClickNavi}
+                          >
+                            Next
+                          </button>
+                         </span>
+                    <span className="render-range">{selectedDateRangeText}</span>
+                </div>
+                <Calendar
+                    height="900px"
+                    calendars={initialCalendars} // 캘린더에서 사용하는 캘린더 목록
+                    month={{ startDayOfWeek: 1 }}
+                    events={initialEvents}
+                    template={{
+                        milestone(event) {
+                            return `<span style="color: #fff; background-color: ${event.backgroundColor};">${event.title}</span>`;
                         },
-                        {
-                            timezoneName: 'Pacific/Guam',
-                            displayLabel: 'Guam',
-                            tooltip: 'UTC+10:00',
+                        allday(event) {
+                            return `[All day] ${event.title}`;
                         },
-                    ],
-                }}
-                useDetailPopup={true} // 기본으로 제공하는 일정 생성 팝업 사용 여부
-                useFormPopup={true} // 기본으로 제공하는 일정 상세 팝업 사용 여부
-                view={selectedView} // 캘린터 타입
-                week={{
-                    showTimezoneCollapseButton: true,
-                    timezonesCollapsed: false,
-                    eventView: true,
-                    taskView: true,
-                }}
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                ref={calendarRef}
-                onAfterRenderEvent={onAfterRenderEvent}
-                onBeforeDeleteEvent={onBeforeDeleteEvent}
-                onClickDayname={onClickDayName}
-                onClickEvent={onClickEvent}
-                onClickTimezonesCollapseBtn={onClickTimezonesCollapseBtn}
-                onBeforeUpdateEvent={onBeforeUpdateEvent}
-                onBeforeCreateEvent={onBeforeCreateEvent}
-            />
-        </div>
+                    }}
+                    theme={theme} // 적용할 테마
+                    timezone={{ // 타임존 셋팅
+                        zones: [
+                            {
+                                timezoneName: 'Asia/Seoul',
+                                displayLabel: 'Seoul',
+                                tooltip: 'UTC+09:00',
+                            },
+                            {
+                                timezoneName: 'Pacific/Guam',
+                                displayLabel: 'Guam',
+                                tooltip: 'UTC+10:00',
+                            },
+                        ],
+                    }}
+                    useDetailPopup={true} // 기본으로 제공하는 일정 생성 팝업 사용 여부
+                    useFormPopup={true} // 기본으로 제공하는 일정 상세 팝업 사용 여부
+                    view={selectedView} // 캘린터 타입
+                    week={{
+                        showTimezoneCollapseButton: true,
+                        timezonesCollapsed: false,
+                        eventView: true,
+                        taskView: true,
+                    }}
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // @ts-ignore
+                    ref={calendarRef}
+                    onAfterRenderEvent={onAfterRenderEvent}
+                    onBeforeDeleteEvent={onBeforeDeleteEvent}
+                    onClickDayname={onClickDayName}
+                    onClickEvent={onClickEvent}
+                    onClickTimezonesCollapseBtn={onClickTimezonesCollapseBtn}
+                    onBeforeUpdateEvent={onBeforeUpdateEvent}
+                    onBeforeCreateEvent={onBeforeCreateEvent}
+                />
+            </div>
+        </>
     )
 }
 export default Calender
