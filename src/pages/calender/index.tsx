@@ -2,6 +2,7 @@ import {theme} from "../../theme";
 
 import { addDate, addHours, subtractDate } from '../../utils';
 
+import DatePicker from "tui-date-picker";
 import Calendar from "@toast-ui/react-calendar";
 import '@toast-ui/calendar/dist/toastui-calendar.min.css';
 import React, {ChangeEvent, useCallback, useEffect, useRef, useState} from "react";
@@ -37,6 +38,10 @@ const Calender = ({ view }: { view: ViewType }) => {
     const [category, setCategory] = useState([ "기본", "운동", "공부", "etc"]);
     // 팔로워 state
     const [ follower, setFollwer] = useState(['김민석', '노휘래', '최충실']);
+
+    // 두 개의 dom을 선택해야하니까 객체 생성도 두 개
+    const dateInput = useRef();
+    const dateWrapper = useRef();
 
     // 공개/비공개 타입 선택
     const initialCalendars: Options['calendars'] = [
@@ -146,6 +151,9 @@ const Calender = ({ view }: { view: ViewType }) => {
         setSelectedDateRangeText(dateRangeText);
     }, [getCalInstance]);
 
+    useEffect(()=>{
+
+    }, [selectedDateRangeText])
     // 캘린터 타입(month/week/day) 변경될 때마다
     useEffect(() => {
         setSelectedView(view);
@@ -192,12 +200,8 @@ const Calender = ({ view }: { view: ViewType }) => {
         }
     };
     const onClickSetDate = (ev: any) => {
-        if ((ev.target as HTMLButtonElement).tagName === 'BUTTON') {
-            const button = ev.target as HTMLButtonElement;
-            const actionName = (button.getAttribute('data-action') ?? 'month');
-            getCalInstance()?.setDate(actionName);
-            updateRenderRangeText();
-        }
+        getCalInstance()?.setDate(ev.target.value);
+        updateRenderRangeText();
     };
 
     const onClickEvent: ExternalEventTypes['clickEvent'] = (res) => {
@@ -289,16 +293,8 @@ const Calender = ({ view }: { view: ViewType }) => {
                       >
                         Next
                       </button>
-                      <button
-                        type="button"
-                        className="btn btn-default btn-sm move-day"
-                        data-action="2022-01-01"
-                        onClick={onClickSetDate}
-                        style={{border: '1px solid gray', borderRadius: '5px', marginRight : '10px', padding:'10px'}}
-                       >
-                        2022-01-01
-                      </button>
-                 </span>
+                      <input type="date" defaultValue="" onChange={onClickSetDate}/>
+                </span>
             </div>
             <div style={{display: 'flex', margin : '10px'}}>
                 <div className={"div2"} style={{flex : 1}}>
