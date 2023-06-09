@@ -125,35 +125,11 @@ const Calender = ({ view }: { view: ViewType }) => {
         let date = calDate.getDate();
         let dateRangeText: string;
 
-        switch (viewName) {
-            case 'month': {
-                dateRangeText = `${year}-${month}`;
-                break;
-            }
-            case 'week': {
-                year = rangeStart.getFullYear();
-                month = rangeStart.getMonth() + 1;
-                date = rangeStart.getDate();
-                const endMonth = rangeEnd.getMonth() + 1;
-                const endDate = rangeEnd.getDate();
-
-                const start = `${year}-${month < 10 ? '0' : ''}${month}-${date < 10 ? '0' : ''}${date}`;
-                const end = `${year}-${endMonth < 10 ? '0' : ''}${endMonth}-${
-                    endDate < 10 ? '0' : ''
-                }${endDate}`;
-                dateRangeText = `${start} ~ ${end}`;
-                break;
-            }
-            default:
-                dateRangeText = `${year}-${month}-${date}`;
-        }
+        dateRangeText = `${year}-${month < 10 ? '0' : ''}${month}-${date < 10 ? '0' : ''}${date}`;
 
         setSelectedDateRangeText(dateRangeText);
     }, [getCalInstance]);
 
-    useEffect(()=>{
-
-    }, [selectedDateRangeText])
     // 캘린터 타입(month/week/day) 변경될 때마다
     useEffect(() => {
         setSelectedView(view);
@@ -264,7 +240,6 @@ const Calender = ({ view }: { view: ViewType }) => {
                         </option>
                     ))}
                 </select>
-                <span className="render-range" style={{border: '1px solid gray', borderRadius: '5px', marginRight : '10px', padding:'10px'}}>{selectedDateRangeText}</span>
                 <span>
                       <button
                           type="button"
@@ -293,7 +268,7 @@ const Calender = ({ view }: { view: ViewType }) => {
                       >
                         Next
                       </button>
-                      <input type="date" defaultValue="" onChange={onClickSetDate}/>
+                      <input style={{border: '1px solid gray', borderRadius: '5px', marginRight : '10px', padding:'10px'}} type="date" value={selectedDateRangeText} onChange={onClickSetDate}/>
                 </span>
             </div>
             <div style={{display: 'flex', margin : '10px'}}>
