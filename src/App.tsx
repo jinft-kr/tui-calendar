@@ -7,10 +7,10 @@ import Header from './components/Header';
 
 export function App() {
     return (
-        <>
+        <div style={{margin:"0% 10%"}}>
           <Header/>
           <Outlet/>
-        </>
+        </div>
     );
 }
 
