@@ -1,12 +1,11 @@
 import {theme} from "../../theme";
 
-import { addDate, addHours, subtractDate } from '../../utils';
-
-import DatePicker from "tui-date-picker";
 import Calendar from "@toast-ui/react-calendar";
 import '@toast-ui/calendar/dist/toastui-calendar.min.css';
 import React, {ChangeEvent, useCallback, useEffect, useRef, useState} from "react";
 import {EventObject, ExternalEventTypes, Options, TZDate} from "@toast-ui/calendar";
+import { addDate, addHours, subtractDate } from '../../utils';
+import Header from '../../components/Header';
 
 type ViewType = 'month' | 'week' | 'day'; // default type : week
 
@@ -27,7 +26,7 @@ const viewModeOptions = [
 ];
 
 
-const Calender = ({ view }: { view: ViewType }) => {
+const DoneCalender = ({ view }: { view: ViewType }) => {
     // useRef 로 특정 DOM(calendar) 선택하기
     const calendarRef = useRef<typeof Calendar>(null);
     // useState 를 통해 컴포넌트에서 바뀌는 값(현재 선택된 날짜) 관리하기
@@ -344,4 +343,4 @@ const Calender = ({ view }: { view: ViewType }) => {
         </main>
     )
 }
-export default Calender
+export default DoneCalender

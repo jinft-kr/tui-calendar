@@ -2,13 +2,14 @@ import './App.css';
 import './input.css';
 
 import React from 'react';
-
-import Calender from "./pages/calender";
+import { Outlet } from 'react-router-dom';
+import Header from './components/Header';
 
 export function App() {
     return (
         <>
-            <Calender view={"month"}/>
+          <Header/>
+          <Outlet/>
         </>
     );
 }
