@@ -275,7 +275,7 @@ const DoneCalender = ({ view }: { view: ViewType }) => {
             <h1 style={{fontWeight: 'bold', color: 'blue'}}>카테고리</h1>
             {
               category.map(category => (
-                <h3>{category}</h3>
+                <h3 key={category}>{category}</h3>
               ))
             }
           </div>
@@ -283,7 +283,7 @@ const DoneCalender = ({ view }: { view: ViewType }) => {
             <h1 style={{fontWeight: 'bold', color: 'blue'}}>팔로워</h1>
             {
               follower.map(follower => (
-                <h3>{follower}</h3>
+                <h3 key={follower}>{follower}</h3>
               ))
             }
           </div>
