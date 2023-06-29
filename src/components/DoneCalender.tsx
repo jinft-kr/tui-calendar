@@ -229,9 +229,13 @@ const DoneCalender = ({ view }: { view: ViewType }) => {
     getCalInstance().createEvents([event]);
   };
   return (
-    <main style={{margin : '10px'}}>
-      <div className={"div1"} style={{ textAlign: 'right', paddingRight : '10px'}}>
-        <select style={{ border: '1px solid gray', borderRadius: '5px', marginLeft: '20px', padding: '10px', float: 'left' }} onChange={onChangeSelect} value={selectedView}>
+    <main className='text-sm m-2'>
+      <div className="flex justify-between m-2">
+        <select 
+        className='font-bold rounded-lg p-2 hover:opacity-70 border-2 h-11 border-blue-500'
+        onChange={onChangeSelect} 
+        value={selectedView}
+        >
           {viewModeOptions.map((option, index) => (
             <option value={option.value} key={index}>
               {option.title}
@@ -239,48 +243,50 @@ const DoneCalender = ({ view }: { view: ViewType }) => {
           ))}
         </select>
         <span>
-                      <button
-                        type="button"
-                        className="btn btn-default btn-sm move-today"
-                        data-action="move-today"
-                        onClick={onClickNavi}
-                        style={{border: '1px solid gray', borderRadius: '5px', marginRight : '10px', padding:'10px'}}
-                      >
-                        Today
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-default btn-sm move-day"
-                        data-action="move-prev"
-                        onClick={onClickNavi}
-                        style={{border: '1px solid gray', borderRadius: '5px', marginRight : '10px', padding:'10px'}}
-                      >
-                        Prev
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-default btn-sm move-day"
-                        data-action="move-next"
-                        onClick={onClickNavi}
-                        style={{border: '1px solid gray', borderRadius: '5px', marginRight : '10px', padding:'10px'}}
-                      >
-                        Next
-                      </button>
-                      <input style={{border: '1px solid gray', borderRadius: '5px', marginRight : '10px', padding:'10px'}} type="date" value={selectedDateRangeText} onChange={onClickSetDate}/>
-                </span>
+          <button
+            type="button"
+            className="btn btn-default btn-sm move-today bg-blue-500 text-white font-bold rounded-lg ml-2 p-3 hover:opacity-70"
+            data-action="move-today"
+            onClick={onClickNavi}
+          >
+            Today
+          </button>
+          <button
+            type="button"
+            className="btn btn-default btn-sm move-day bg-blue-500 text-white font-bold rounded-lg ml-2 p-3 hover:opacity-70"
+            data-action="move-prev"
+            onClick={onClickNavi}
+          >
+            Prev
+          </button>
+          <button
+            type="button"
+            className="btn btn-default btn-sm move-day bg-blue-500 text-white font-bold rounded-lg ml-2 p-3 hover:opacity-70"
+            data-action="move-next"
+            onClick={onClickNavi}
+          >
+            Next
+          </button>
+          <input 
+            className='font-bold rounded-lg border-2 hover:opacity-70 border-[3px] h-11 border-blue-500 ml-2 p-2'
+            type="date" 
+            value={selectedDateRangeText} 
+            onChange={onClickSetDate}
+          />
+        </span>
       </div>
-      <div style={{display: 'flex', margin : '10px'}}>
-        <div className={"div2"} style={{flex : 1}}>
-          <div style={{border: '1px solid gray', borderRadius: '5px', margin: '10px', padding: '30px', marginBottom: '5px'}}>
-            <h1 style={{fontWeight: 'bold', color: 'blue'}}>카테고리</h1>
+      <div className='flex m-2'>
+        <div className='mr-4'>
+          <div className='border-2 border-gray-300 p-4 my-3 rounded-lg'>
+            <h1 className='text-center font-bold text-blue-700'>카테고리</h1>
             {
               category.map(category => (
                 <h3 key={category}>{category}</h3>
               ))
             }
           </div>
-          <div style={{border: '1px solid gray', borderRadius: '5px', margin: '10px', padding: '30px'}}>
-            <h1 style={{fontWeight: 'bold', color: 'blue'}}>팔로워</h1>
+          <div className='border-2 border-gray-300 p-4 my-5 rounded-lg'>
+            <h1 className='text-center font-bold text-blue-700'>팔로워</h1>
             {
               follower.map(follower => (
                 <h3 key={follower}>{follower}</h3>
@@ -288,9 +294,9 @@ const DoneCalender = ({ view }: { view: ViewType }) => {
             }
           </div>
         </div>
-        <div className={"div3"} style={{flex: 9}}>
+        <div className='flex-1' >
           <Calendar
-            height="900px"
+            height="90vh"
             calendars={initialCalendars} // 캘린더에서 사용하는 캘린더 목록
             month={{ startDayOfWeek: 1 }}
             events={initialEvents}
