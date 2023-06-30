@@ -3,6 +3,9 @@ import cards from '../../assets/json/todo_data.json';
 import categories from '../../assets/json/category_data.json';
 
 const KarbanBoard = () => {
+
+    const TODO_STATUS = ['TODO', 'IN PROGRESS', 'DONE'];
+
     return(
       <>
         <div>
@@ -23,9 +26,7 @@ const KarbanBoard = () => {
           </section>
     </div>
     <div className='flex flex-row flex-grow m-2 p-3'>
-        <CardList key='Todo' title={'ToDo'} cards={cards.filter((card) => card.status == 'ToDo')}></CardList>
-        <CardList key='Doing' title={'Doing'} cards={cards.filter((card) => card.status == 'Doing')}></CardList>
-        <CardList key='Done' title={'Done'} cards={cards.filter((card) => card.status == 'Done')}></CardList>
+        {TODO_STATUS.map((todo_status : string) => <CardList key={todo_status} title={todo_status} cards={cards.filter((card) => card.status === todo_status)}></CardList>)}
     </div>
     </>
     )

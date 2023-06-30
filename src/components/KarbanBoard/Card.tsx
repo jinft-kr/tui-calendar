@@ -1,4 +1,5 @@
 const Card = ({title, category, start_date, end_date, level}:any) => {
+
   return (
     <div className='flex-column flex-1 p-3 m-2 border-2 border-gray rounded-lg hover:bg-gray-100'>
       <div className='font-bold'>{title}</div>

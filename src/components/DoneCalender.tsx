@@ -37,10 +37,6 @@ const DoneCalender = ({ view }: { view: ViewType }) => {
   // 팔로워 state
   const [ follower, setFollwer] = useState(['김민석', '노휘래', '최충실']);
 
-  // 두 개의 dom을 선택해야하니까 객체 생성도 두 개
-  const dateInput = useRef();
-  const dateWrapper = useRef();
-
   // 공개/비공개 타입 선택
   const initialCalendars: Options['calendars'] = [
     {
@@ -113,10 +109,7 @@ const DoneCalender = ({ view }: { view: ViewType }) => {
       setSelectedDateRangeText('');
     }
 
-    const viewName = calInstance.getViewName();
     const calDate = calInstance.getDate();
-    const rangeStart = calInstance.getDateRangeStart();
-    const rangeEnd = calInstance.getDateRangeEnd();
 
     let year = calDate.getFullYear();
     let month = calDate.getMonth() + 1;
