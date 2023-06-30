@@ -229,10 +229,10 @@ const DoneCalender = ({ view }: { view: ViewType }) => {
     getCalInstance().createEvents([event]);
   };
   return (
-    <main className='text-sm m-2'>
+    <main className='text-sm m-2 p-3'>
       <div className="flex justify-between m-2">
         <select 
-        className='font-bold rounded-lg p-2 hover:opacity-70 border-2 h-11 border-blue-500'
+        className='font-bold rounded-lg p-2 hover:opacity-70 border-2 h-11 border-blue-500 shadow-md'
         onChange={onChangeSelect} 
         value={selectedView}
         >
@@ -245,7 +245,7 @@ const DoneCalender = ({ view }: { view: ViewType }) => {
         <span>
           <button
             type="button"
-            className="btn btn-default btn-sm move-today bg-blue-500 text-white font-bold rounded-lg ml-2 p-3 hover:opacity-70"
+            className="btn btn-default btn-sm move-today bg-blue-500 text-white font-bold rounded-lg ml-2 p-3 hover:opacity-70 shadow-md"
             data-action="move-today"
             onClick={onClickNavi}
           >
@@ -253,7 +253,7 @@ const DoneCalender = ({ view }: { view: ViewType }) => {
           </button>
           <button
             type="button"
-            className="btn btn-default btn-sm move-day bg-blue-500 text-white font-bold rounded-lg ml-2 p-3 hover:opacity-70"
+            className="btn btn-default btn-sm move-day bg-blue-500 text-white font-bold rounded-lg ml-2 p-3 hover:opacity-70 shadow-md"
             data-action="move-prev"
             onClick={onClickNavi}
           >
@@ -261,14 +261,14 @@ const DoneCalender = ({ view }: { view: ViewType }) => {
           </button>
           <button
             type="button"
-            className="btn btn-default btn-sm move-day bg-blue-500 text-white font-bold rounded-lg ml-2 p-3 hover:opacity-70"
+            className="btn btn-default btn-sm move-day bg-blue-500 text-white font-bold rounded-lg ml-2 p-3 hover:opacity-70 shadow-md"
             data-action="move-next"
             onClick={onClickNavi}
           >
             Next
           </button>
           <input 
-            className='font-bold rounded-lg border-2 hover:opacity-70 border-[3px] h-11 border-blue-500 ml-2 p-2'
+            className='font-bold rounded-lg border-2 hover:opacity-70 h-11 border-blue-500 ml-2 p-2 shadow-md'
             type="date" 
             value={selectedDateRangeText} 
             onChange={onClickSetDate}
@@ -277,7 +277,7 @@ const DoneCalender = ({ view }: { view: ViewType }) => {
       </div>
       <div className='flex m-2'>
         <div className='mr-4'>
-          <div className='border-2 border-gray-300 p-4 my-3 rounded-lg'>
+          <div className='border-2 border-gray-300 p-4 my-3 rounded-lg shadow-md'>
             <h1 className='text-center font-bold text-blue-700'>카테고리</h1>
             {
               category.map(category => (
@@ -285,7 +285,7 @@ const DoneCalender = ({ view }: { view: ViewType }) => {
               ))
             }
           </div>
-          <div className='border-2 border-gray-300 p-4 my-5 rounded-lg'>
+          <div className='border-2 border-gray-300 p-4 my-5 rounded-lg shadow-md'>
             <h1 className='text-center font-bold text-blue-700'>팔로워</h1>
             {
               follower.map(follower => (

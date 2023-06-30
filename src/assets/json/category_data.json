@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "main_category_name": "공부",
+    "sub_category_name": "학교"
+  },
+  {
+    "id": 2,
+    "main_category_name": "운동",
+    "sub_category_name": null
+  },
+  {
+    "id": 3,
+    "main_category_name": "일상",
+    "sub_category_name": null
+  },
+  {
+      "id": 4,
+      "main_category_name": "취미",
+      "sub_category_name": null
+  },
+  {
+    "id": 5,
+    "main_category_name": "약속",
+    "sub_category_name": null
+  }
+]
