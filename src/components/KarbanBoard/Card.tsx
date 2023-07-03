@@ -1,17 +1,9 @@
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { toDoState } from "../../recoil/store";
-
 const Card = ({id, title, category, start_date, end_date, level, onDelete}:any) => {
-
-  const [ toDo, setToDo ] = useRecoilState(toDoState);
-  const setToDoSetRecoilState = useSetRecoilState(toDoState);
 
   return (
     <div className='flex-column flex-1 p-3 m-2 border-2 border-gray rounded-lg hover:bg-gray-100'>
       <div className='font-bold'>
         {title}
-        <button className='ml-2 bg-blue-500'>PRE</button>
-        <button className='ml-2 bg-blue-500'>NEXT</button>
       </div>
       <div className='flex flex-row text-sm font-bold'>
         <div className='pl-2 pr-2 mr-2 bg-blue-500 border-none text-white rounded-lg'>{category}</div>

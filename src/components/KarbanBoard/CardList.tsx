@@ -1,23 +1,15 @@
-import { useRecoilState, useResetRecoilState } from "recoil";
-import Card from "./Card";
-import { toDoState } from "../../recoil/store";
-import { useCallback, useState } from "react";
-import TodoModal from "./TodoModal";
 import { ToDo } from "../../types/ToDo";
+
+import { useCallback } from "react";
+
+import Card from "./Card";
+import { useRecoilState } from "recoil";
+import { toDoState } from "../../recoil/store";
+
 
 const CardList = ({title, cards}:any) => {
 
     const [ toDo, setToDo ] = useRecoilState(toDoState);
-    const [isModal, setIsModal] = useState<boolean>(false);
-    const [modifyContents, setModifyContents] = useState<ToDo>();
-
-    const onAddTodo = () => {
-      setIsModal(true);
-    }
-
-    const onModifyTodo = useCallback((): void => {
-      setIsModal(false);
-    }, []);
   
     const onDelete = useCallback((id: number) => {
       // 매개변수로 받은 id와 동일하지 않는 객체들만 필터링
@@ -39,13 +31,6 @@ const CardList = ({title, cards}:any) => {
                                       onDelete={onDelete}
           />)}
         </div>
-        <button className="m-3 p-3 bg-blue-500" onClick={onAddTodo}> + </button>
-        {
-          isModal && <TodoModal
-            setIsModal={setIsModal}
-            onModifyTodo={onModifyTodo}
-          />
-        }
       </div>
     )
   }
