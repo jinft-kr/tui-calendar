@@ -1,11 +1,15 @@
 import CardList from "./CardList";
-import cards from '../../assets/json/todo_data.json';
 import categories from '../../assets/json/category_data.json';
+import { toDoState } from "../../recoil/store";
+
+import { useRecoilState } from "recoil";
 
 const KarbanBoard = () => {
 
     const TODO_STATUS = ['TODO', 'IN PROGRESS', 'DONE'];
 
+    const [ toDo, setToDo ] = useRecoilState(toDoState);
+    
     return(
       <>
         <div>
@@ -26,7 +30,7 @@ const KarbanBoard = () => {
           </section>
     </div>
     <div className='flex flex-row flex-grow m-2 p-3'>
-        {TODO_STATUS.map((todo_status : string) => <CardList key={todo_status} title={todo_status} cards={cards.filter((card) => card.status === todo_status)}></CardList>)}
+        {TODO_STATUS.map((todo_status : string) => <CardList key={todo_status} title={todo_status} cards={toDo.filter((card) => card.status === todo_status)}></CardList>)}
     </div>
     </>
     )

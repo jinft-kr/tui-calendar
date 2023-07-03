@@ -10,7 +10,7 @@
         "start_date" : "2023-05-01 00:00:00",
         "end_date" : "2023-05-07 00:00:00",
         "date_pattern" : "once",
-        "repeat" : "false",
+        "repeat" : false,
         "follwer" : [],
         "location" : "Seoul",
         "feedback" : "게으름"
@@ -26,7 +26,7 @@
         "start_date" : "2023-05-01 00:00:00",
         "end_date" : "2023-05-07 00:00:00",
         "date_pattern" : "once",
-        "repeat" : "false",
+        "repeat" : false,
         "follwer" : [],
         "location" : "Seoul",
         "feedback" : "일정빡빡"
@@ -42,7 +42,7 @@
         "start_date" : "2023-05-01 00:00:00",
         "end_date" : "2023-05-07 00:00:00",
         "date_pattern" : "once",
-        "repeat" : "false",
+        "repeat" : false,
         "follwer" : [],
         "location" : "Seoul",
         "feedback" : "일정빡빡"
@@ -58,7 +58,7 @@
         "start_date" : "2023-05-01 00:00:00",
         "end_date" : "2023-05-07 00:00:00",
         "date_pattern" : "once",
-        "repeat" : "false",
+        "repeat" : false,
         "follwer" : [],
         "location" : "Seoul",
         "feedback" : "일정빡빡"
