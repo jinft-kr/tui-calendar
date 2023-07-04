@@ -1,11 +1,11 @@
-import DoneCalender from '../../components/DoneCalender';
-import KarbanBoard from '../../components/KarbanBoard/index';
+import ToDoCalender from '../../components/ToDoCalender';
+import KarbanBoard from '../../components/KarbanBoard';
 
 const Calender = () => {
     return (
       <>
         <KarbanBoard/>
-        <DoneCalender view={'month'}/>
+        <ToDoCalender view={'month'}/>
       </>
     )
 }

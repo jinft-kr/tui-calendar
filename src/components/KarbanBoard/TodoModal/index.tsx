@@ -88,7 +88,7 @@ const TodoModal = () : JSX.Element => {
               className='font-bold rounded-lg border-2 hover:opacity-70 h-11 border-blue-500 m-2 p-3 shadow-md'
               defaultValue={context.level}
               onChange={handleInputChange}>
-              {LEVEL.map((level:any) => <option key={level} value={level}>{level}</option>)}
+              {LEVEL.map((level:string) => <option key={level} value={level}>{level}</option>)}
             </select>
           </div>
           <div>
@@ -98,7 +98,7 @@ const TodoModal = () : JSX.Element => {
               defaultValue = {context.status}
               onChange={handleInputChange}
               >
-              {STATUS.map((status:any) => <option key={status} value={status}>{status}</option>)}
+              {STATUS.map((status:string) => <option key={status} value={status}>{status}</option>)}
             </select>
           </div>
           <button

@@ -1,41 +1,25 @@
-import { theme } from '../theme';
+import { theme } from '../../theme';
 
 import Calendar from "@toast-ui/react-calendar";
 import '@toast-ui/calendar/dist/toastui-calendar.min.css';
-import {ChangeEvent, useCallback, useEffect, useRef, useState} from "react";
-import {EventObject, ExternalEventTypes, Options, TZDate} from "@toast-ui/calendar";
-import { addDate, addHours, subtractDate } from '../utils';
+import { useCallback, useEffect, useRef, useState } from "react";
+import { EventObject, ExternalEventTypes, Options, TZDate } from "@toast-ui/calendar";
+
+import { addDate, addHours, subtractDate } from '../../utils';
+import Header from './Header';
+import Navbar from './Navbar';
 
 type ViewType = 'month' | 'week' | 'day'; // default type : week
 
 const today = new TZDate();
-const viewModeOptions = [
-  {
-    title: 'Monthly',
-    value: 'month',
-  },
-  {
-    title: 'Weekly',
-    value: 'week',
-  },
-  {
-    title: 'Daily',
-    value: 'day',
-  },
-];
 
-
-const DoneCalender = ({ view }: { view: ViewType }) => {
+const ToDoCalender = ({ view }: { view: ViewType }) => {
   // useRef 로 특정 DOM(calendar) 선택하기
   const calendarRef = useRef<typeof Calendar>(null);
   // useState 를 통해 컴포넌트에서 바뀌는 값(현재 선택된 날짜) 관리하기
   const [selectedDateRangeText, setSelectedDateRangeText] = useState('');
   // useState 를 통해 컴포넌트에서 바뀌는 값(캘린터 타입(monthly, weekly, daily) 관리하기
   const [selectedView, setSelectedView] = useState(view);
-  // 카테고리 state
-  const [category, setCategory] = useState([ "기본", "운동", "공부", "etc"]);
-  // 팔로워 state
-  const [ follower, setFollwer] = useState(['김민석', '노휘래', '최충실']);
 
   // 공개/비공개 타입 선택
   const initialCalendars: Options['calendars'] = [
@@ -63,6 +47,7 @@ const DoneCalender = ({ view }: { view: ViewType }) => {
       title: 'TOAST UI Calendar Study', // 일정 제목
       body : '일정내용으 이겁니다~!1', // 일정 내용
       category: 'time', // 일정 카테고리(milestone, task, allday, time 중 하나)
+      main_category: '공부',
       start: today, // 일정이 시작하는 일시
       end: addHours(today, 3), // 일정이 끝나는 일시
       location: '', // 일정 장소
@@ -74,6 +59,7 @@ const DoneCalender = ({ view }: { view: ViewType }) => {
       title: 'Practice',
       body : '일정내용은 이겁니다~!2', // 일정 내용
       category: 'milestone',
+      main_category: '공부',
       start: addDate(today, 1), // 일정이 시작하는 일시
       end: addDate(today, 1), // 일정이 끝나는 일시
       isReadOnly: true,
@@ -83,6 +69,7 @@ const DoneCalender = ({ view }: { view: ViewType }) => {
       calendarId: '1',
       title: 'FE Workshop',
       category: 'allday',
+      main_category: '공부',
       start: subtractDate(today, 2),
       end: subtractDate(today, 1),
       isReadOnly: true,
@@ -92,6 +79,7 @@ const DoneCalender = ({ view }: { view: ViewType }) => {
       calendarId: '0',
       title: 'Report',
       category: 'time',
+      main_category: '공부',
       start: today,
       end: addHours(today, 1),
     },
@@ -102,33 +90,10 @@ const DoneCalender = ({ view }: { view: ViewType }) => {
   // useCallback 을 사용하여 함수(calender의 DOM) 재사용하기
   const getCalInstance = useCallback(() => calendarRef.current?.getInstance?.(), []);
 
-  // rendering 될 때마다 캘린더 표시 날짜 바꿔주기
-  const updateRenderRangeText = useCallback(() => {
-    const calInstance = getCalInstance();
-    if (!calInstance) {
-      setSelectedDateRangeText('');
-    }
-
-    const calDate = calInstance.getDate();
-
-    let year = calDate.getFullYear();
-    let month = calDate.getMonth() + 1;
-    let date = calDate.getDate();
-    let dateRangeText: string;
-
-    dateRangeText = `${year}-${month < 10 ? '0' : ''}${month}-${date < 10 ? '0' : ''}${date}`;
-
-    setSelectedDateRangeText(dateRangeText);
-  }, [getCalInstance]);
-
   // 캘린터 타입(month/week/day) 변경될 때마다
   useEffect(() => {
     setSelectedView(view);
   }, [view]);
-
-  useEffect(() => {
-    updateRenderRangeText();
-  }, [selectedView, updateRenderRangeText]);
 
   const onAfterRenderEvent: ExternalEventTypes['afterRenderEvent'] = (res) => {
     console.group('onAfterRenderEvent');
@@ -146,29 +111,10 @@ const DoneCalender = ({ view }: { view: ViewType }) => {
     getCalInstance().deleteEvent(id, calendarId);
   };
 
-  // 캘런더 타입 바꿀 때 실행되는 이벤트
-  const onChangeSelect = (ev: ChangeEvent<HTMLSelectElement>) => {
-    setSelectedView(ev.target.value as ViewType);
-  };
-
-  //
   const onClickDayName: ExternalEventTypes['clickDayName'] = (res) => {
     console.group('onClickDayName');
     console.log('Date : ', res.date);
     console.groupEnd();
-  };
-
-  const onClickNavi = (ev: any) => {
-    if ((ev.target as HTMLButtonElement).tagName === 'BUTTON') {
-      const button = ev.target as HTMLButtonElement;
-      const actionName = (button.getAttribute('data-action') ?? 'month').replace('move-', '');
-      getCalInstance()[actionName]();
-      updateRenderRangeText();
-    }
-  };
-  const onClickSetDate = (ev: any) => {
-    getCalInstance()?.setDate(ev.target.value);
-    updateRenderRangeText();
   };
 
   const onClickEvent: ExternalEventTypes['clickEvent'] = (res) => {
@@ -223,70 +169,15 @@ const DoneCalender = ({ view }: { view: ViewType }) => {
   };
   return (
     <main className='text-sm m-2 p-3'>
-      <div className="flex justify-between m-2">
-        <select 
-        className='font-bold rounded-lg p-2 hover:opacity-70 border-2 h-11 border-blue-500 shadow-md'
-        onChange={onChangeSelect} 
-        value={selectedView}
-        >
-          {viewModeOptions.map((option, index) => (
-            <option value={option.value} key={index}>
-              {option.title}
-            </option>
-          ))}
-        </select>
-        <span>
-          <button
-            type="button"
-            className="btn btn-default btn-sm move-today bg-blue-500 text-white font-bold rounded-lg ml-2 p-3 hover:opacity-70 shadow-md"
-            data-action="move-today"
-            onClick={onClickNavi}
-          >
-            Today
-          </button>
-          <button
-            type="button"
-            className="btn btn-default btn-sm move-day bg-blue-500 text-white font-bold rounded-lg ml-2 p-3 hover:opacity-70 shadow-md"
-            data-action="move-prev"
-            onClick={onClickNavi}
-          >
-            Prev
-          </button>
-          <button
-            type="button"
-            className="btn btn-default btn-sm move-day bg-blue-500 text-white font-bold rounded-lg ml-2 p-3 hover:opacity-70 shadow-md"
-            data-action="move-next"
-            onClick={onClickNavi}
-          >
-            Next
-          </button>
-          <input 
-            className='font-bold rounded-lg border-2 hover:opacity-70 h-11 border-blue-500 ml-2 p-2 shadow-md'
-            type="date" 
-            value={selectedDateRangeText} 
-            onChange={onClickSetDate}
-          />
-        </span>
-      </div>
+      <Header 
+        view={view}
+        selectedView={selectedView}
+        setSelectedView={setSelectedView}
+        getCalInstance={getCalInstance}
+        setSelectedDateRangeText={setSelectedDateRangeText}
+        selectedDateRangeText={selectedDateRangeText} />
       <div className='flex m-2'>
-        <div className='mr-4'>
-          <div className='border-2 border-gray-300 p-4 my-3 rounded-lg shadow-md'>
-            <h1 className='text-center font-bold text-blue-700'>카테고리</h1>
-            {
-              category.map(category => (
-                <h3 key={category}>{category}</h3>
-              ))
-            }
-          </div>
-          <div className='border-2 border-gray-300 p-4 my-5 rounded-lg shadow-md'>
-            <h1 className='text-center font-bold text-blue-700'>팔로워</h1>
-            {
-              follower.map(follower => (
-                <h3 key={follower}>{follower}</h3>
-              ))
-            }
-          </div>
-        </div>
+        <Navbar/>
         <div className='flex-1' >
           <Calendar
             height="90vh"
@@ -341,4 +232,4 @@ const DoneCalender = ({ view }: { view: ViewType }) => {
     </main>
   )
 }
-export default DoneCalender
+export default ToDoCalender
