@@ -19,7 +19,7 @@ const KarbanBoard = () => {
     const onAddModal =  () => {
       setContext({
         ...context,
-        id : toDo[toDo.length - 1].id + 1 
+        id : toDo.length <= 0 ? 0 : toDo[toDo.length - 1].id + 1 
       });
       setIsModal(true);
     };
