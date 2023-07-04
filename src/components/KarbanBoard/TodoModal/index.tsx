@@ -1,12 +1,12 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 
 import categories from '../../../assets/json/category_data.json';
 
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { contextState, modalState, toDoState } from '../../../recoil/store';
 
-const level = ["HIGH", "MEDIUM", "LOW"]
-const status = ["TODO", "IN PROGRESS", "DONE"]
+const LEVEL = ["HIGH", "MEDIUM", "LOW"]
+const STATUS = ["TODO", "IN PROGRESS", "DONE"]
 
 const TodoModal = () : JSX.Element => {
 
@@ -88,7 +88,7 @@ const TodoModal = () : JSX.Element => {
               className='font-bold rounded-lg border-2 hover:opacity-70 h-11 border-blue-500 m-2 p-3 shadow-md'
               defaultValue={context.level}
               onChange={handleInputChange}>
-              {level.map((level:any) => <option key={level} value={level}>{level}</option>)}
+              {LEVEL.map((level:any) => <option key={level} value={level}>{level}</option>)}
             </select>
           </div>
           <div>
@@ -98,7 +98,7 @@ const TodoModal = () : JSX.Element => {
               defaultValue = {context.status}
               onChange={handleInputChange}
               >
-              {status.map((status:any) => <option key={status} value={status}>{status}</option>)}
+              {STATUS.map((status:any) => <option key={status} value={status}>{status}</option>)}
             </select>
           </div>
           <button

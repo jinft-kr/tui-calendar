@@ -2,7 +2,7 @@ import { theme } from '../theme';
 
 import Calendar from "@toast-ui/react-calendar";
 import '@toast-ui/calendar/dist/toastui-calendar.min.css';
-import React, {ChangeEvent, useCallback, useEffect, useRef, useState} from "react";
+import {ChangeEvent, useCallback, useEffect, useRef, useState} from "react";
 import {EventObject, ExternalEventTypes, Options, TZDate} from "@toast-ui/calendar";
 import { addDate, addHours, subtractDate } from '../utils';
 

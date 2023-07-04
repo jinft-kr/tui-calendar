@@ -3,7 +3,6 @@ import categories from '../../assets/json/category_data.json';
 import { contextState, modalState, toDoState } from "../../recoil/store";
 
 import { useRecoilState } from "recoil";
-import { useCallback, useEffect, useState } from "react";
 import TodoModal from "./TodoModal";
 import { ToDo } from "../../types/ToDo";
 
