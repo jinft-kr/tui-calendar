@@ -13,11 +13,6 @@ export const modalState = atom<boolean>({
     default : false
 })
 
-// export const isContextState = atom<boolean>({
-//     key : 'isContextState',
-//     default : false
-// })
-
 export const contextState = atom<ToDo>({
     key: 'contextState',
     default : {

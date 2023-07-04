@@ -21,7 +21,18 @@ const TodoModal = () : JSX.Element => {
   }, [modalState]);
 
   const onAddToDo = () => {
-    setToDo([...toDo, context])
+    const existingToDoIndex = toDo.findIndex(item => item.id === context.id);
+  
+    if (existingToDoIndex !== -1) {
+        // 동일한 id가 있는 경우(기존의 ToDoItem을 수정하는 경우) 해당 객체를 업데이트
+        const updatedToDo = [...toDo];
+        updatedToDo[existingToDoIndex] = context;
+        setToDo(updatedToDo);
+    } else {
+        // id가 없는 경우(새로운 ToDoItem을 추가하는 경우) 새로운 객체 추가
+        setToDo([...toDo, context]);
+    }
+
     resetContext();
     setIsModal(false);
   };
